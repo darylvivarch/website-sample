@@ -206,14 +206,14 @@
             </div>
 
             <!-- Spotlight Section (Morph Target) -->
-            <div id="programme-spotlight" class="bg-vivarch-light rounded-3xl overflow-hidden shadow-2xl border border-teal-100 mb-12 min-h-[500px] flex reveal">
+            <div id="programme-spotlight" class="bg-vivarch-light rounded-3xl overflow-hidden shadow-2xl border border-teal-100 mb-12 min-h-[500px] lg:h-[600px] flex reveal">
                 <!-- Content gets injected here by JS -->
-                <div id="spotlight-content" class="w-full grid lg:grid-cols-2">
+                <div id="spotlight-content" class="w-full grid lg:grid-cols-2 h-full">
                     <!-- Default Content (Will be replaced instantly on load) -->
-                    <div class="relative h-64 lg:h-auto bg-slate-200">
+                    <div class="relative h-64 lg:h-full bg-slate-200">
                         <img id="spot-img" src="" class="w-full h-full object-cover">
                     </div>
-                    <div class="p-8 lg:p-12 flex flex-col justify-center">
+                    <div class="p-8 lg:p-12 flex flex-col justify-start h-full">
                         <div id="spot-icon-container" class="w-16 h-16 rounded-2xl bg-teal-100 text-vivarch-main flex items-center justify-center text-3xl mb-6">
                             <i id="spot-icon" class="fas fa-star"></i>
                         </div>
@@ -277,7 +277,7 @@
                 <!-- Dance -->
                 <button onclick="updateSpotlight(4)" class="prog-card group p-4 rounded-xl border-2 border-slate-100 hover:border-teal-200 bg-white transition-all duration-300 text-center flex flex-col items-center gap-3">
                     <div class="w-12 h-12 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
-                        <i class="fas fa-music"></i>
+                        <i class="fas fa-child-reaching"></i>
                     </div>
                     <span class="font-bold text-slate-700 text-sm">Dance</span>
                 </button>
@@ -452,7 +452,7 @@
             {
                 title: "Speech & Drama",
                 desc: "Express yourself with confidence. We help students find their voice through theatrical expression, public speaking workshops, and script writing.",
-                img: "https://images.unsplash.com/photo-1503095392237-73621376f0c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                img: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
                 icon: "fa-theater-masks",
                 colorClass: "bg-purple-100 text-purple-600",
                 focus: ["Public Speaking", "Theatrical Acting", "Script Writing"],
@@ -462,7 +462,7 @@
                 title: "Modern Dance",
                 desc: "Rhythm and movement. Our dance programmes cover genres from Hip Hop to Contemporary, focusing on coordination, artistic expression, and stage confidence.",
                 img: "https://images.unsplash.com/photo-1535525153412-5a42439a210d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                icon: "fa-music",
+                icon: "fa-child-reaching",
                 colorClass: "bg-pink-100 text-pink-600",
                 focus: ["Hip Hop / K-Pop", "Contemporary", "Choreography"],
                 level: "Primary & Secondary"
