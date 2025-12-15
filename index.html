@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivarch Enrichment Group | Holistic Education Provider</title>
+    <meta name="description" content="Vivarch Enrichment Group - Specialising in holistic enrichment programmes including Arts, Sports, STEM, and Lifeskills.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Config & Styles -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vivarch: {
+                            main: '#0097A7', // Vivarch Brand Teal
+                            dark: '#1e293b', // Slate 800
+                            hover: '#00838f', // Darker Teal for hover
+                            light: '#f0fdfa', // Very light teal/slate background
+                            text: '#334155', // Slate 700
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #0097A7; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00838f; }
+
+        /* General Utils */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Glassmorphism */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 151, 167, 0.1);
+        }
+
+        /* --- PROGRAMME MORPH STYLES --- */
+        #spotlight-content {
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+        
+        .morph-enter {
+            opacity: 0;
+            transform: scale(0.98) translateY(10px);
+        }
+        
+        .morph-active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Active Card Indicator */
+        .prog-card.active {
+            border-color: #0097A7;
+            background-color: #f0fdfa;
+            transform: translateY(-8px);
+            box-shadow: 0 10px 15px -3px rgba(0, 151, 167, 0.1), 0 4px 6px -2px rgba(0, 151, 167, 0.05);
+        }
+
+        /* Vertical Slider */
+        .v-slider-container { height: 300px; overflow: hidden; position: relative; }
+        .v-slider-track { transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+    </style>
+</head>
+<body class="font-sans text-vivarch-text bg-vivarch-light overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300 glass-nav" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer relative z-50" onclick="window.scrollTo(0,0)">
+                    <img src="https://vivarch.com.sg/wp-content/uploads/2020/12/Vivarch-Logo.png" 
+                         alt="Vivarch Logo" 
+                         class="h-12 w-auto object-contain"
+                         onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex'">
+                    
+                    <div id="logo-fallback" class="hidden flex-col justify-center leading-none">
+                        <span class="font-heading font-extrabold text-2xl text-vivarch-main tracking-tight">VIVARCH</span>
+                        <span class="text-[0.6rem] text-slate-500 uppercase tracking-widest">Enrichment Group</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu (Hidden on mobile as requested, no burger button) -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#about" class="text-vivarch-dark hover:text-vivarch-main font-medium transition-colors">About</a>
+                    <a href="#programmes" class="text-vivarch-dark hover:text-vivarch-main font-medium transition-colors">Programmes</a>
+                    <a href="#stats" class="text-vivarch-dark hover:text-vivarch-main font-medium transition-colors">Impact</a>
+                    <a href="#contact" class="bg-vivarch-main text-white px-6 py-2.5 rounded-full font-semibold shadow-md hover:bg-vivarch-hover hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                        Get a Quote
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden" id="about">
+        <!-- Parallax Layers -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 bg-vivarch-light">
+            <div class="parallax-layer absolute -top-[10%] -right-[10%] w-[50vw] h-[50vw] bg-teal-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40" data-speed="0.2"></div>
+            <div class="parallax-layer absolute top-[30%] -left-[10%] w-[40vw] h-[40vw] bg-cyan-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40" data-speed="-0.1"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+            <div class="text-center lg:text-left reveal active">
+                <div class="inline-block px-4 py-1.5 mb-6 rounded-full bg-teal-100 border border-teal-200 text-vivarch-main font-semibold text-sm tracking-wide uppercase">
+                    Holistic Education Since 2010
+                </div>
+                <h1 class="text-5xl lg:text-7xl font-heading font-extrabold text-vivarch-dark leading-tight mb-6">
+                    Enriching Minds,<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-vivarch-main to-teal-400">Enlivening Lives.</span>
+                </h1>
+                <p class="text-lg lg:text-xl text-slate-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    Vivarch merges creativity, sports, and technology to nurture future-ready leaders.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="#programmes" class="px-8 py-4 bg-vivarch-main text-white rounded-full font-bold shadow-lg shadow-teal-500/30 hover:bg-vivarch-hover transition-all duration-300 flex items-center justify-center gap-2">
+                        Explore Programmes <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Image -->
+            <div class="relative hidden lg:block reveal delay-200 parallax-layer" data-speed="0.05">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                    <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Students" class="w-full h-auto object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-vivarch-dark/70 to-transparent flex items-end p-8">
+                        <div class="text-white">
+                            <p class="font-bold text-lg">Future-Ready Skills</p>
+                            <p class="text-sm opacity-90">Developing potential beyond the classroom</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Section -->
+    <section id="stats" class="py-20 bg-vivarch-dark text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="reveal p-4">
+                    <div class="text-4xl lg:text-5xl font-bold text-vivarch-main mb-2 counter" data-target="500000">0</div>
+                    <p class="text-xs lg:text-sm font-medium text-slate-400 uppercase tracking-widest">Students Impacted</p>
+                </div>
+                <div class="reveal delay-100 p-4">
+                    <div class="text-4xl lg:text-5xl font-bold text-teal-400 mb-2 counter" data-target="100">0</div>
+                    <p class="text-xs lg:text-sm font-medium text-slate-400 uppercase tracking-widest">Partner Schools</p>
+                </div>
+                <div class="reveal delay-200 p-4">
+                    <div class="text-4xl lg:text-5xl font-bold text-cyan-400 mb-2 counter" data-target="500">0</div>
+                    <p class="text-xs lg:text-sm font-medium text-slate-400 uppercase tracking-widest">Programmes</p>
+                </div>
+                <div class="reveal delay-300 p-4">
+                    <div class="text-4xl lg:text-5xl font-bold text-white mb-2 counter" data-target="25">0</div>
+                    <p class="text-xs lg:text-sm font-medium text-slate-400 uppercase tracking-widest">Awards Won</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRAMME SHOWCASE (Morph Effect) -->
+    <section id="programmes" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-vivarch-main font-bold tracking-wider uppercase text-sm">Our Expertise</span>
+                <h2 class="text-3xl lg:text-4xl font-heading font-bold text-vivarch-dark mt-2">Find Your Passion</h2>
+            </div>
+
+            <!-- Spotlight Section (Morph Target) -->
+            <div id="programme-spotlight" class="bg-vivarch-light rounded-3xl overflow-hidden shadow-2xl border border-teal-100 mb-12 min-h-[500px] flex reveal">
+                <!-- Content gets injected here by JS -->
+                <div id="spotlight-content" class="w-full grid lg:grid-cols-2">
+                    <!-- Default Content (Will be replaced instantly on load) -->
+                    <div class="relative h-64 lg:h-auto bg-slate-200">
+                        <img id="spot-img" src="" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-8 lg:p-12 flex flex-col justify-center">
+                        <div id="spot-icon-container" class="w-16 h-16 rounded-2xl bg-teal-100 text-vivarch-main flex items-center justify-center text-3xl mb-6">
+                            <i id="spot-icon" class="fas fa-star"></i>
+                        </div>
+                        <h3 id="spot-title" class="text-3xl font-heading font-bold text-vivarch-dark mb-4">Select a Programme</h3>
+                        <p id="spot-desc" class="text-slate-600 text-lg leading-relaxed mb-8">Click on any card below to view detailed curriculum and benefits.</p>
+                        
+                        <div class="grid grid-cols-2 gap-6 mb-8">
+                            <div>
+                                <h4 class="font-bold text-vivarch-dark text-sm uppercase mb-2">Focus Areas</h4>
+                                <ul id="spot-focus" class="text-slate-600 text-sm space-y-1">
+                                    <li>- Loading...</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-vivarch-dark text-sm uppercase mb-2">Target Level</h4>
+                                <p id="spot-level" class="text-slate-600 text-sm">Primary & Secondary</p>
+                            </div>
+                        </div>
+
+                        <a href="#contact" class="inline-block px-8 py-3 bg-vivarch-main text-white font-bold rounded-xl hover:bg-vivarch-hover transition-colors w-max">
+                            Enquire Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Programme Selector Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 reveal delay-100">
+                <!-- Visual Arts -->
+                <button onclick="updateSpotlight(0)" class="prog-card active group p-4 rounded-xl border-2 border-slate-100 hover:border-teal-200 bg-white transition-all duration-300 text-center flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <span class="font-bold text-slate-700 text-sm">Visual Arts</span>
+                </button>
+
+                <!-- STEM -->
+                <button onclick="updateSpotlight(1)" class="prog-card group p-4 rounded-xl border-2 border-slate-100 hover:border-teal-200 bg-white transition-all duration-300 text-center flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <span class="font-bold text-slate-700 text-sm">STEM</span>
+                </button>
+
+                <!-- Sports -->
+                <button onclick="updateSpotlight(2)" class="prog-card group p-4 rounded-xl border-2 border-slate-100 hover:border-teal-200 bg-white transition-all duration-300 text-center flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <span class="font-bold text-slate-700 text-sm">Sports</span>
+                </button>
+
+                <!-- Drama -->
+                <button onclick="updateSpotlight(3)" class="prog-card group p-4 rounded-xl border-2 border-slate-100 hover:border-teal-200 bg-white transition-all duration-300 text-center flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                        <i class="fas fa-theater-masks"></i>
+                    </div>
+                    <span class="font-bold text-slate-700 text-sm">Drama</span>
+                </button>
+
+                <!-- Dance -->
+                <button onclick="updateSpotlight(4)" class="prog-card group p-4 rounded-xl border-2 border-slate-100 hover:border-teal-200 bg-white transition-all duration-300 text-center flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <span class="font-bold text-slate-700 text-sm">Dance</span>
+                </button>
+
+                <!-- Lifeskills -->
+                <button onclick="updateSpotlight(5)" class="prog-card group p-4 rounded-xl border-2 border-slate-100 hover:border-teal-200 bg-white transition-all duration-300 text-center flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <span class="font-bold text-slate-700 text-sm">Lifeskills</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-24 bg-teal-50 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Left: Static Image -->
+                <div class="reveal relative">
+                    <div class="absolute -top-4 -left-4 w-full h-full border-2 border-vivarch-main rounded-3xl parallax-layer" data-speed="0.05"></div>
+                    <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Teacher and Student" class="rounded-3xl shadow-2xl relative z-10">
+                </div>
+                
+                <!-- Right: Vertical Content Slider -->
+                <div class="reveal delay-200">
+                    <h2 class="text-3xl lg:text-4xl font-heading font-bold text-vivarch-dark mb-6">Why Schools Choose Vivarch?</h2>
+                    
+                    <!-- Slider Wrapper -->
+                    <div class="relative pl-8 border-l-2 border-slate-200">
+                        <!-- Navigation Buttons -->
+                        <div class="absolute -left-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-20">
+                            <button id="slider-up" class="w-8 h-8 rounded-full bg-white shadow-md text-vivarch-main hover:bg-vivarch-main hover:text-white transition-colors flex items-center justify-center">
+                                <i class="fas fa-chevron-up text-xs"></i>
+                            </button>
+                            <button id="slider-down" class="w-8 h-8 rounded-full bg-white shadow-md text-vivarch-main hover:bg-vivarch-main hover:text-white transition-colors flex items-center justify-center">
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                        </div>
+
+                        <!-- Slider Container -->
+                        <div class="v-slider-container">
+                            <div class="v-slider-track" id="slider-track">
+                                <!-- Slide 1 -->
+                                <div class="h-[300px] flex flex-col justify-center">
+                                    <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-vivarch-main text-white flex items-center justify-center text-3xl shadow-lg shadow-teal-500/30 mb-6">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <h4 class="text-2xl font-bold text-vivarch-dark mb-4">Holistic Approach</h4>
+                                    <p class="text-slate-600 text-lg leading-relaxed">We don't just teach skills; we nurture values. Our programs integrate Social and Emotional Learning (SEL) competencies.</p>
+                                </div>
+                                <!-- Slide 2 -->
+                                <div class="h-[300px] flex flex-col justify-center">
+                                    <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-vivarch-dark text-white flex items-center justify-center text-3xl shadow-lg mb-6">
+                                        <i class="fas fa-chalkboard-teacher"></i>
+                                    </div>
+                                    <h4 class="text-2xl font-bold text-vivarch-dark mb-4">Expert Trainers</h4>
+                                    <p class="text-slate-600 text-lg leading-relaxed">Our database includes hundreds of MOE-registered instructors who are passionate about education and experienced in classroom management.</p>
+                                </div>
+                                <!-- Slide 3 -->
+                                <div class="h-[300px] flex flex-col justify-center">
+                                    <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-teal-400 text-white flex items-center justify-center text-3xl shadow-lg mb-6">
+                                        <i class="fas fa-hand-holding-dollar"></i>
+                                    </div>
+                                    <h4 class="text-2xl font-bold text-vivarch-dark mb-4">Funding Assistance</h4>
+                                    <p class="text-slate-600 text-lg leading-relaxed">We guide schools through NAC-AEP, SEP, and other government funding frameworks to help maximize student benefits.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Enquiry Form Section (Restored) -->
+    <section id="contact" class="py-24 bg-vivarch-dark relative overflow-hidden">
+        <!-- Parallax Decoration -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-vivarch-main rounded-full opacity-10 blur-3xl parallax-layer" data-speed="-0.1"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500 rounded-full opacity-10 blur-3xl parallax-layer" data-speed="0.1"></div>
+
+        <div class="max-w-4xl mx-auto px-4 relative z-10 text-center reveal">
+            <h2 class="text-3xl lg:text-5xl font-heading font-bold text-white mb-6">Ready to Enliven Lives?</h2>
+            <p class="text-slate-300 text-lg mb-12">Whether you are a school teacher looking for next year's enrichment vendor, or a parent seeking a holiday camp, we are here to help.</p>
+            
+            <form class="bg-white rounded-2xl p-8 lg:p-12 shadow-2xl text-left">
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-bold text-vivarch-dark mb-2">Your Name</label>
+                        <input type="text" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-vivarch-main focus:ring-2 focus:ring-teal-100 outline-none transition-all" placeholder="John Doe">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-vivarch-dark mb-2">Email Address</label>
+                        <input type="email" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-vivarch-main focus:ring-2 focus:ring-teal-100 outline-none transition-all" placeholder="john@school.edu.sg">
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-bold text-vivarch-dark mb-2">Phone Number</label>
+                        <input type="tel" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-vivarch-main focus:ring-2 focus:ring-teal-100 outline-none transition-all" placeholder="+65">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-vivarch-dark mb-2">I am a...</label>
+                        <select class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-vivarch-main focus:ring-2 focus:ring-teal-100 outline-none transition-all bg-white">
+                            <option>School Teacher / HOD</option>
+                            <option>Parent</option>
+                            <option>Corporate Partner</option>
+                            <option>Job Applicant</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-8">
+                    <label class="block text-sm font-bold text-vivarch-dark mb-2">Message</label>
+                    <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-vivarch-main focus:ring-2 focus:ring-teal-100 outline-none transition-all" placeholder="Tell us what you are looking for..."></textarea>
+                </div>
+                <button type="button" class="w-full bg-vivarch-main text-white font-bold py-4 rounded-xl hover:bg-vivarch-hover shadow-lg shadow-teal-500/30 transition-all duration-300 transform hover:-translate-y-1">
+                    Send Enquiry
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 py-16 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-8">
+                <span class="font-heading font-bold text-2xl text-white tracking-tight">VIVARCH<span class="text-vivarch-main">.</span></span>
+            </div>
+            <p class="mb-8 max-w-xl mx-auto text-sm text-slate-400">Singapore's leading holistic enrichment provider since 2010.</p>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-vivarch-main hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-vivarch-main hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="text-xs text-slate-500">
+                &copy; 2025 Vivarch Enrichment Group. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // --- PROGRAMME DATA & MORPH LOGIC ---
+        const programmes = [
+            {
+                title: "Visual Arts (Artelier)",
+                desc: "Unleash creativity through painting, relief printing, clay art, and mixed media. Our Artelier curriculum encourages students to find their unique visual voice while mastering techniques.",
+                img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                icon: "fa-palette",
+                colorClass: "bg-orange-100 text-orange-600",
+                focus: ["Painting & Sketching", "Ceramics & Clay", "Digital Art"],
+                level: "Primary, Secondary, JC"
+            },
+            {
+                title: "STEM & Robotics",
+                desc: "Prepare for a digital future. Our STEM programmes combine coding, engineering challenges, and robotics (Lego/Arduino) to develop critical thinking and problem-solving skills.",
+                img: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                icon: "fa-robot",
+                colorClass: "bg-blue-100 text-blue-600",
+                focus: ["Coding (Python/Scratch)", "Robotics Engineering", "Science Experiments"],
+                level: "Primary to Tertiary"
+            },
+            {
+                title: "Outdoor Sports",
+                desc: "Building resilience and teamwork. From kayaking to team sports, our outdoor programmes are designed to foster physical health, leadership, and camaraderie among students.",
+                img: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                icon: "fa-running",
+                colorClass: "bg-green-100 text-green-600",
+                focus: ["Team Sports", "Adventure Camps", "Physical Fitness"],
+                level: "All Levels"
+            },
+            {
+                title: "Speech & Drama",
+                desc: "Express yourself with confidence. We help students find their voice through theatrical expression, public speaking workshops, and script writing.",
+                img: "https://images.unsplash.com/photo-1503095392237-73621376f0c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                icon: "fa-theater-masks",
+                colorClass: "bg-purple-100 text-purple-600",
+                focus: ["Public Speaking", "Theatrical Acting", "Script Writing"],
+                level: "Primary & Secondary"
+            },
+            {
+                title: "Modern Dance",
+                desc: "Rhythm and movement. Our dance programmes cover genres from Hip Hop to Contemporary, focusing on coordination, artistic expression, and stage confidence.",
+                img: "https://images.unsplash.com/photo-1535525153412-5a42439a210d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                icon: "fa-music",
+                colorClass: "bg-pink-100 text-pink-600",
+                focus: ["Hip Hop / K-Pop", "Contemporary", "Choreography"],
+                level: "Primary & Secondary"
+            },
+            {
+                title: "Lifeskills & Leadership",
+                desc: "Beyond academics. We equip students with essential life tools including financial literacy, emotional intelligence, and leadership strategies.",
+                img: "https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                icon: "fa-users",
+                colorClass: "bg-yellow-100 text-yellow-600",
+                focus: ["Financial Literacy", "Leadership Camps", "SEL Workshops"],
+                level: "Secondary & Tertiary"
+            }
+        ];
+
+        function updateSpotlight(index) {
+            const content = document.getElementById('spotlight-content');
+            const cards = document.querySelectorAll('.prog-card');
+            
+            // 1. Fade Out
+            content.classList.remove('morph-active');
+            content.classList.add('morph-enter');
+            
+            // Update Active State on Buttons
+            cards.forEach(c => c.classList.remove('active'));
+            cards[index].classList.add('active');
+
+            // 2. Update Content after short delay to allow fade out
+            setTimeout(() => {
+                const p = programmes[index];
+                document.getElementById('spot-title').innerText = p.title;
+                document.getElementById('spot-desc').innerText = p.desc;
+                document.getElementById('spot-img').src = p.img;
+                document.getElementById('spot-level').innerText = p.level;
+                
+                // Update Icon & Color
+                const iconContainer = document.getElementById('spot-icon-container');
+                iconContainer.className = `w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-6 ${p.colorClass}`;
+                document.getElementById('spot-icon').className = `fas ${p.icon}`;
+
+                // Update List
+                const list = document.getElementById('spot-focus');
+                list.innerHTML = p.focus.map(f => `<li>• ${f}</li>`).join('');
+
+                // 3. Fade In
+                content.classList.remove('morph-enter');
+                content.classList.add('morph-active');
+            }, 300);
+        }
+
+        // Initialize First Programme
+        window.addEventListener('DOMContentLoaded', () => {
+            updateSpotlight(0);
+        });
+
+
+        // --- SLIDER & PARALLAX ---
+        const parallaxLayers = document.querySelectorAll('.parallax-layer');
+        window.addEventListener('scroll', () => {
+            const scrollY = window.pageYOffset;
+            if (window.innerWidth > 768) {
+                parallaxLayers.forEach(layer => {
+                    const speed = layer.getAttribute('data-speed');
+                    layer.style.transform = `translateY(${-scrollY * speed}px)`;
+                });
+            }
+        });
+
+        // Vertical Slider
+        const track = document.getElementById('slider-track');
+        const btnUp = document.getElementById('slider-up');
+        const btnDown = document.getElementById('slider-down');
+        let currentSlide = 0;
+        const slideCount = 3;
+
+        function updateSlider() {
+            track.style.transform = `translateY(-${currentSlide * 300}px)`;
+            btnUp.style.opacity = currentSlide === 0 ? '0.5' : '1';
+            btnDown.style.opacity = currentSlide === slideCount - 1 ? '0.5' : '1';
+        }
+        if(btnDown && btnUp) {
+            btnDown.addEventListener('click', () => { if (currentSlide < slideCount - 1) { currentSlide++; updateSlider(); }});
+            btnUp.addEventListener('click', () => { if (currentSlide > 0) { currentSlide--; updateSlider(); }});
+        }
+
+        // Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Counters
+        const counters = document.querySelectorAll('.counter');
+        let hasAnimatedCounters = false;
+        const counterObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !hasAnimatedCounters) {
+                hasAnimatedCounters = true;
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const increment = target / 100;
+                    let current = 0;
+                    const updateCounter = () => {
+                        current += increment;
+                        if (current < target) {
+                            counter.innerText = Math.ceil(current).toLocaleString();
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.innerText = target.toLocaleString() + '+';
+                        }
+                    };
+                    updateCounter();
+                });
+            }
+        });
+        const statsSection = document.getElementById('stats');
+        if(statsSection) counterObserver.observe(statsSection);
+
+    </script>
+</body>
+</html>
